@@ -14,4 +14,24 @@ public class CaseState {
 		this.state = state;
 	}
 
+
+	public int getPosCaseX() {
+		return posCaseX;
+	}
+
+
+	public int getPosCaseY() {
+		return posCaseY;
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 }

@@ -54,19 +54,57 @@ public class AgentA {
 		return EnvironmentList;
 	}
 	
-	public void ChooseNewCase(){
-		
+	//return first caseState at lowest distance
+	public CaseState ChooseNewCase(ArrayList<CaseState> EnvironmentList){		
+		CaseState caseState = null;
+		int sPrec = 20;
+		int s;
+		for(CaseState casestatet : EnvironmentList){
+			
+			s = PathCalculValue(casestatet, posx, posy);	
+			if(s < sPrec){
+				sPrec = s;
+				caseState = casestatet;
+			}
+		}
+		return caseState;
 	}
 	
-	public void PathCalculValue(){
+	//return state of first nearest case from postion in parameter
+	public CaseState ChooseAnotherCase (ArrayList<CaseState> EnvironmentList , int posxTemp , int posyTemp){
+		CaseState caseState = null;
+		int sPrec = 20;
+		int s;
+		for(CaseState casestatet : EnvironmentList){
+			
+			s = PathCalculValue(casestatet, posxTemp, posyTemp);	
+			if(s < sPrec){
+				sPrec = s;
+				caseState = casestatet;
+			}
+		}
+		return caseState;
+	}
+	public int PathCalculValue(CaseState goal, int posxA, int posyA){
 		
+		return Math.abs(goal.getPosCaseX() + goal.getPosCaseY() - posxA - posyA);
 	}
 	
-	public void Vacuum(){
+	public String Clean(CaseState caseS){
+		if(caseS.getState() == "jewel"){
+			caseS.setState("empty");
+			return "PickUp";
+		}
+		else
+		{
+			caseS.setState("empty");
+			return "Vaccum";
+		}
 		
 	}
-	
+/*	
 	public void PickUp(){
 		
 	}
+	*/
 }
