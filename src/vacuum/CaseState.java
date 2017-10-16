@@ -1,13 +1,15 @@
 package vacuum;
 
+import app.Case;
+
 public class CaseState {
 	
 	public int posCaseX;
 	public int posCaseY;
-	public String state;
+	public app.Case state;
 	
 	
-	public CaseState(int posCaseX, int posCaseY, String state) {
+	public CaseState(int posCaseX, int posCaseY, Case state) {
 		super();
 		this.posCaseX = posCaseX;
 		this.posCaseY = posCaseY;
@@ -25,12 +27,12 @@ public class CaseState {
 	}
 
 
-	public String getState() {
+	public app.Case getState() {
 		return state;
 	}
 
 
-	public void setState(String state) {
+	public void setState(app.Case state) {
 		this.state = state;
 	}
 

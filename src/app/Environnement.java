@@ -34,6 +34,10 @@ public class Environnement extends Application {
 	int a=0,b=0, k=0, c=0, stop=0;
 	
 	
+	public Room[][] getCases(){
+		return cases;
+	}
+	
 	public static void main(String[] args) { launch(args); }
 	public Environnement() {
 		cases = new Room[10][10];

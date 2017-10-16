@@ -2,6 +2,9 @@ package vacuum;
 
 import java.util.ArrayList;
 
+import app.Case;
+import app.Environnement;
+
 public class AgentA {
 	/*
 	 * ****** structure of environment*******
@@ -21,7 +24,7 @@ public class AgentA {
 	public int posy = 0;
 	
 	//tab of actual environment
-	public String[][] environment; 
+	public app.Room[][] environment; 
 	
 	//public ArrayList<CaseState> EnvironmentList;
 	
@@ -31,8 +34,7 @@ public class AgentA {
 	}
 	
 	public void init(){
-		
-		//environment = actualEnvironnement;
+
 	}
 	
 	//return list of caseState
@@ -42,10 +44,10 @@ public class AgentA {
 		CaseState caseState;
 		ArrayList<CaseState> EnvironmentList = new ArrayList<CaseState>();
 		
-		for (i=0; i < environment.length; i++){
-			for (j=0; j < environment.length; j++){
-				if (environment[i][j] != "empty"){					
-					caseState = new CaseState(i,j,environment[i][j]);
+		for (i=0; i < 10; i++){
+			for (j=0; j < 10; j++){
+				if (environment[i][j].getTypeC() != Case.empty){					
+					caseState = new CaseState(i,j,environment[i][j].getTypeC());
 					EnvironmentList.add(caseState);
 				}
 			}
@@ -91,13 +93,13 @@ public class AgentA {
 	}
 	
 	public String Clean(CaseState caseS){
-		if(caseS.getState() == "jewel"){
-			caseS.setState("empty");
+		if(caseS.getState() == Case.jewel){
+			caseS.setState(Case.empty);
 			return "PickUp";
 		}
 		else
 		{
-			caseS.setState("empty");
+			caseS.setState(Case.empty);
 			return "Vaccum";
 		}
 		
