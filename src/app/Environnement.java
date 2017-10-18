@@ -8,7 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.shape.Path;
 
 public class Environnement {
-	
+	public final int SPAWN_TIMER=2000;
 	public Room[][] cases;
 	Path path = new Path();
 	Random rand = new Random();
@@ -30,7 +30,7 @@ public class Environnement {
 		Task<Void> sleeper = new Task<Void>() {
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(SPAWN_TIMER);
 					} 
 				catch (InterruptedException e) {
 		        }

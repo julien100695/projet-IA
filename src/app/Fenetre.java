@@ -16,9 +16,8 @@ import vacuum.AgentA;
 public class Fenetre {
 		
 	public final int STUFF_TO_CLEAN = 10;
-	Rectangle[] dust = new Rectangle[STUFF_TO_CLEAN];
-	Rectangle[] jewel = new Rectangle[STUFF_TO_CLEAN];
-	Rectangle[] two = new Rectangle[STUFF_TO_CLEAN];
+	public final int REFRESH=200;
+	Rectangle[][] color = new Rectangle[10][10];
 	Circle agent = new Circle(35,35,20, Color.WHITE);
 	
 	
@@ -31,18 +30,18 @@ public class Fenetre {
 	
 	public void init_scene_environment(Group root) {
 		//draw rooms
-		for (int i = 0; i <= 9; i++) {
+		for (int i = 0; i <= 10; i++) {
 			path.getElements().add(new MoveTo(-70.0f, (70 * i)));
-			path.getElements().add(new HLineTo(9 * 70));
+			path.getElements().add(new HLineTo(10 * 70));
 			path.getElements().add(new MoveTo((70 * i), -70.0f));
-			path.getElements().add(new VLineTo(9 * 70));
+			path.getElements().add(new VLineTo(10 * 70));
 		}
 		
 		//init stuff to clean in scene
-		for(int j=0;j<10;j++){
-			dust[j] = new Rectangle(68,68);
-			jewel[j] = new Rectangle(68,68);
-			two[j] = new Rectangle(68,68);   	
+		for(int i=0;i<10;i++){
+			for(int j=0;j<10;j++) {
+				color[i][j] = new Rectangle(68,68);
+			}
 		}
 		root.getChildren().add(path);
 		root.getChildren().add(agent);
@@ -53,7 +52,7 @@ public class Fenetre {
 		Task<Void> sleeper2 = new Task<Void>() {
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(200);
+					Thread.sleep(REFRESH);
 					} 
 				catch (InterruptedException e) {
 		        }
@@ -67,50 +66,50 @@ public class Fenetre {
 				if (env.cases[i][j].getTypeC() == Case.dust)
 				{
 					
-						dust[k].setX(1+70 * i);
-						dust[k].setY(1+70* j);
-					 	dust[k].setWidth(70);
-						dust[k].setHeight(70);
-						if(dust[k].getFill()!=Color.RED)
-						{
-							dust[k].setFill(Color.RED);
-							root.getChildren().add(dust[k]);
-						}
-						k++;
+					color[i][j].setX(1+70 * i);
+					color[i][j].setY(1+70* j);
+					color[i][j].setWidth(70);
+					color[i][j].setHeight(70);
+					if(color[i][j].getFill()!=Color.RED)
+					{
+						color[i][j].setFill(Color.RED);
+						root.getChildren().add(color[i][j]);
+					}
 				}
 				if (env.cases[i][j].getTypeC() == Case.jewel)
 				{
 					
-						jewel[k].setX(70 * i);
-						jewel[k].setY(70 * j);
-					 	jewel[k].setWidth(70);
-						jewel[k].setHeight(70);
-						if(jewel[k].getFill()!=Color.BLUE)
-						{
-							jewel[k].setFill(Color.BLUE);
-						root.getChildren().add(jewel[k]);
-						}	
-						k++;									                	
+					color[i][j].setX(1+70 * i);
+					color[i][j].setY(1+70* j);
+					color[i][j].setWidth(70);
+					color[i][j].setHeight(70);
+					if(color[i][j].getFill()!=Color.BLUE)
+					{
+						color[i][j].setFill(Color.BLUE);
+						root.getChildren().add(color[i][j]);
+					}										                	
 				}
 				if (env.cases[i][j].getTypeC() == Case.two)
 				{
 					
-						two[k].setX(1+70 * i);
-						two[k].setY(1+70 * j);
-					 	two[k].setWidth(70);
-						two[k].setHeight(70);
-						if(two[k].getFill()!=Color.VIOLET)
-						{
-							two[k].setFill(Color.VIOLET);
-						root.getChildren().add(two[k]);
-						}	
-						k++;									                	
+					color[i][j].setX(1+70 * i);
+					color[i][j].setY(1+70* j);
+					color[i][j].setWidth(70);
+					color[i][j].setHeight(70);
+					if(color[i][j].getFill()!=Color.VIOLET)
+					{
+						color[i][j].setFill(Color.VIOLET);
+					}								                	
 				}
-				agent.setCenterX((age.posx+1)*35);
-				agent.setCenterY((age.posy+1)*35);
+				if (env.cases[i][j].getTypeC() == Case.empty)
+					root.getChildren().remove(color[i][j]);
+
+				agent.setCenterX(age.posx*70+35);
+				agent.setCenterY(age.posy*70+35);
+				
+				//System.out.println("posxdisplay: " + age.posx + " posydisplay " + age.posy);
 			}
 		}
-		k=0;
 		update_scene(root, env, age);
             }
         });

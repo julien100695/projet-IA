@@ -20,6 +20,7 @@ public class Main extends Application {
 	public ArrayList<CaseState> EnvironmentList;
 	public CaseState close;
 	
+	//Environment
 	Thread envi = new Thread() {
 		 public void run(){
 			 System.out.println("Thread1");
@@ -27,15 +28,19 @@ public class Main extends Application {
 			 environment.add_stuff_to_clean();  
 		} 	
 	};
-	
+	//Agent
 	Thread agen = new Thread() {
 		public void run() {
-			try{Thread.sleep(5000);}catch(InterruptedException e){System.out.println(e);} 
+			//start later to let environment initialize
 			System.out.println("Thread2");
 			agent = new AgentA();
+			try{Thread.sleep(3000);}catch(InterruptedException e){System.out.println(e);}
 			EnvironmentList=agent.Observe(environment);
 			close=agent.ChooseNewCase(EnvironmentList);
 			System.out.println("x: " + close.posCaseX +" y: " + close.posCaseY + " state :" + close.state);
+			agent.Move_to_Room(close, environment);
+			agent.Clean(close, environment);
+			System.out.println("posxtrue: " + agent.posx + " posytrue " + agent.posy);
 		
 		}
 	};
@@ -54,10 +59,7 @@ public class Main extends Application {
 	        primaryStage.setResizable(false);
 	        
 	        //init fenetre
-	        Fenetre fenetre = new Fenetre();
-	        
-	        agent = new AgentA();
-	        
+	        Fenetre fenetre = new Fenetre();        
 	        
 	        fenetre.init_scene_environment(root);
 	        

@@ -85,17 +85,47 @@ public class AgentA {
 		return Math.abs(goal.getPosCaseX() + goal.getPosCaseY() - posxA - posyA);
 	}
 	
-	public String Clean(CaseState caseS){
+	public String Clean(CaseState caseS, Environnement environment){
 		if(caseS.getState() == Case.jewel){
 			caseS.setState(Case.empty);
+			environment.cases[caseS.posCaseX][caseS.posCaseY].setTypeC(Case.empty);
 			return "PickUp";
 		}
 		else
 		{
 			caseS.setState(Case.empty);
+			environment.cases[caseS.posCaseX][caseS.posCaseY].setTypeC(Case.empty);
 			return "Vaccum";
 		}
+	}	
 		
+	public void Move_to_Room(CaseState caseS, Environnement environment){	
+		for(int i=posx;i<caseS.posCaseX;i++) {
+			try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}
+			posx++;
+			
+		}
+		for(int j=posy;j<caseS.posCaseY;j++) {
+				try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}
+				posy++;
+		}
+				System.out.println("posx: " + posx + " posy " + posy);			
+	}
+	public void Move_left()
+	{
+		posx--;
+	}
+	public void Move_right()
+	{
+		posx++;
+	}
+	public void Move_up()
+	{
+		posy--;
+	}
+	public void Move_down()
+	{
+		posy++;
 	}
 /*	
 	public void PickUp(){
