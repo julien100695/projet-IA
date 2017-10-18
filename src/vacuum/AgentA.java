@@ -5,15 +5,7 @@ import java.util.ArrayList;
 import app.Case;
 import app.Environnement;
 
-public class AgentA {
-	/*
-	 * ****** structure of environment*******
-	 * enum = {empty, jewel, dust, two}
-	 * tableau[0][0];
-	 * 
-	 * */
-	
-	
+public class AgentA {		
 	//time in sec for moving of 1 case
 	public final int MOVE_TIME = 5;
 	//time in sec for observing
@@ -24,9 +16,9 @@ public class AgentA {
 	public int posy = 0;
 	
 	//tab of actual environment
-	public app.Room[][] environment; 
+	//public app.Room[][] environment; 
 	
-	//public ArrayList<CaseState> EnvironmentList;
+	public ArrayList<CaseState> EnvironmentList;
 	
 	public void NewListEnvironnement(){
 		//destruct all couple then list
@@ -39,15 +31,16 @@ public class AgentA {
 	
 	//return list of caseState
 	//caseState contains object in environment(dust or jewel) and position 
-	public ArrayList<CaseState> Observe(){
+	public ArrayList<CaseState> Observe(Environnement environment){
 		int i, j;
 		CaseState caseState;
 		ArrayList<CaseState> EnvironmentList = new ArrayList<CaseState>();
 		
+		
 		for (i=0; i < 10; i++){
 			for (j=0; j < 10; j++){
-				if (environment[i][j].getTypeC() != Case.empty){					
-					caseState = new CaseState(i,j,environment[i][j].getTypeC());
+				if (environment.cases[i][j].getTypeC() != Case.empty){					
+					caseState = new CaseState(i,j,environment.cases[i][j].getTypeC());
 					EnvironmentList.add(caseState);
 				}
 			}
@@ -72,7 +65,7 @@ public class AgentA {
 		return caseState;
 	}
 	
-	//return state of first nearest case from postion in parameter
+	//return state of first nearest case from position in parameter
 	public CaseState ChooseAnotherCase (ArrayList<CaseState> EnvironmentList , int posxTemp , int posyTemp){
 		CaseState caseState = null;
 		int sPrec = 20;
