@@ -99,16 +99,31 @@ public class AgentA {
 		}
 	}	
 		
-	public void Move_to_Room(CaseState caseS, Environnement environment){	
-		for(int i=posx;i<caseS.posCaseX;i++) {
+	public void Move_to_Room(CaseState caseS, Environnement environment){
+		if(posx<caseS.posCaseX) {
+			for(int i=posx;i<caseS.posCaseX;i++) {
 			try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}
 			posx++;
-			
+			}
 		}
-		for(int j=posy;j<caseS.posCaseY;j++) {
+		else {
+			for(int i=posx;i>caseS.posCaseX;i--) {
+				try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}
+				posx--;	
+			}
+		}	
+		if(posy<caseS.posCaseY) {
+			for(int j=posy;j<caseS.posCaseY;j++) {
 				try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}
 				posy++;
-		}
+			}
+		}	
+			else {
+				for(int i=posy;i>caseS.posCaseY;i--) {
+					try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}
+					posy--;	
+				}
+			}		
 				System.out.println("posx: " + posx + " posy " + posy);			
 	}
 	public void Move_left()

@@ -30,17 +30,25 @@ public class Main extends Application {
 	};
 	//Agent
 	Thread agen = new Thread() {
-		public void run() {
-			//start later to let environment initialize
+		public void run() {			
 			System.out.println("Thread2");
 			agent = new AgentA();
+			//start later to let environment initialize
 			try{Thread.sleep(3000);}catch(InterruptedException e){System.out.println(e);}
 			EnvironmentList=agent.Observe(environment);
 			close=agent.ChooseNewCase(EnvironmentList);
-			System.out.println("x: " + close.posCaseX +" y: " + close.posCaseY + " state :" + close.state);
 			agent.Move_to_Room(close, environment);
 			agent.Clean(close, environment);
-			System.out.println("posxtrue: " + agent.posx + " posytrue " + agent.posy);
+			
+			EnvironmentList=agent.Observe(environment);
+			close=agent.ChooseNewCase(EnvironmentList);
+			agent.Move_to_Room(close, environment);
+			agent.Clean(close, environment);
+			
+			EnvironmentList=agent.Observe(environment);
+			close=agent.ChooseNewCase(EnvironmentList);
+			agent.Move_to_Room(close, environment);
+			agent.Clean(close, environment);
 		
 		}
 	};
