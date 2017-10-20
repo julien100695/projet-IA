@@ -18,14 +18,17 @@ public class Main extends Application {
 	Environnement environment;
 	AgentA agent;
 	public ArrayList<CaseState> EnvironmentList;
+	public ArrayList<CaseState> Movelist;
 	public CaseState close;
+	public CaseState[][] envir;
+	int dist = 0;
 	
 	//Environment
 	Thread envi = new Thread() {
 		 public void run(){
 			 System.out.println("Thread1");
 			 environment = new Environnement();
-			 environment.add_stuff_to_clean();  
+			 environment.add_stuff_to_clean(); //Environnement ajoute poussière ou bijou  
 		} 	
 	};
 	//Agent
@@ -33,22 +36,23 @@ public class Main extends Application {
 		public void run() {			
 			System.out.println("Thread2");
 			agent = new AgentA();
+			
 			//start later to let environment initialize
-			try{Thread.sleep(3000);}catch(InterruptedException e){System.out.println(e);}
-			EnvironmentList=agent.Observe(environment);
-			close=agent.ChooseNewCase(EnvironmentList);
-			agent.Move_to_Room(close, environment);
-			agent.Clean(close, environment);
-			
-			EnvironmentList=agent.Observe(environment);
-			close=agent.ChooseNewCase(EnvironmentList);
-			agent.Move_to_Room(close, environment);
-			agent.Clean(close, environment);
-			
-			EnvironmentList=agent.Observe(environment);
-			close=agent.ChooseNewCase(EnvironmentList);
-			agent.Move_to_Room(close, environment);
-			agent.Clean(close, environment);
+			try{Thread.sleep(3000);}catch(InterruptedException e){System.out.println(e);}			
+			for(int i=0;i<10;i++)
+			{
+			try{Thread.sleep(1000);}catch(InterruptedException e){System.out.println(e);}
+			envir = new CaseState[10][10];
+			Movelist = new ArrayList<CaseState>();
+			EnvironmentList=agent.Observe(environment); //Agent observe l'environnement
+			//envir=agent.envir_init(environment);
+			close=agent.ChooseNewCase(EnvironmentList); //Agent choisit la case non vide la plus proche
+			//envir=agent.init_dist(EnvironmentList, close, envir);
+			//Movelist=agent.exploration_informée(close, EnvironmentList, envir);
+			//agent.execute_move(Movelist);		
+			agent.Move_to_Room(close, environment); //Agent se déplace à la case
+			agent.Clean(close, environment); //Agent nettoie
+			}
 		
 		}
 	};

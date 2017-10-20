@@ -27,6 +27,7 @@ public class Environnement {
 	
 	public void add_stuff_to_clean() {
 		//Every 2 Seconds spawns stuff
+		
 		Task<Void> sleeper = new Task<Void>() {
 			protected Void call() throws Exception {
 				try {
