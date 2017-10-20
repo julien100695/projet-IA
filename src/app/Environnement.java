@@ -28,7 +28,7 @@ public class Environnement {
 	public void add_stuff_to_clean() {
 		//Every 2 Seconds spawns stuff
 		
-		Task<Void> sleeper = new Task<Void>() {
+		/*Task<Void> sleeper = new Task<Void>() {
 			protected Void call() throws Exception {
 				try {
 					Thread.sleep(SPAWN_TIMER);
@@ -39,7 +39,7 @@ public class Environnement {
 		        }
 		};
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            public void handle(WorkerStateEvent event) {
+            public void handle(WorkerStateEvent event) {*/
             	do
         		{
         			a=rand.nextInt(9);
@@ -55,10 +55,9 @@ public class Environnement {
             		cases[a][b].setTypeC(Case.jewel);
             	else if((c==0 && cases[a][b].getTypeC()==Case.jewel) || (c==1 && cases[a][b].getTypeC()==Case.dust) )
             		cases[a][b].setTypeC(Case.two);
-                add_stuff_to_clean();
-
+                //add_stuff_to_clean();
             }
-        });
+        /*});
         new Thread(sleeper).start();
-	}
+	}*/
 }

@@ -22,13 +22,21 @@ public class Main extends Application {
 	public CaseState close;
 	public CaseState[][] envir;
 	int dist = 0;
+	int stuff_to_spawn=10;
+	int stop=10;
 	
 	//Environment
 	Thread envi = new Thread() {
 		 public void run(){
 			 System.out.println("Thread1");
 			 environment = new Environnement();
-			 environment.add_stuff_to_clean(); //Environnement ajoute poussière ou bijou  
+			 
+			 while(stuff_to_spawn>=0)
+			 {
+			 environment.add_stuff_to_clean(); //Environnement ajoute poussière ou bijou
+			 try{Thread.sleep(2000);}catch(InterruptedException e){System.out.println(e);}
+			 stuff_to_spawn--;
+			 }
 		} 	
 	};
 	//Agent methode informée 
@@ -39,21 +47,26 @@ public class Main extends Application {
 			
 			//start later to let environment initialize
 			try{Thread.sleep(3000);}catch(InterruptedException e){System.out.println(e);}			
-			for(int i=0;i<10;i++)
-			{
-			try{Thread.sleep(1000);}catch(InterruptedException e){System.out.println(e);}
+			
+			while(stop>0){
 			envir = new CaseState[10][10];
 			Movelist = new ArrayList<CaseState>();
-			EnvironmentList=agent.Observe(environment); //Agent observe l'environnement
-			//envir=agent.envir_init(environment);
+			
+			EnvironmentList=agent.Observe(environment); //Agent observe l'environnement (toutes les salles ayant un objet sont notées)
 			close=agent.ChooseNewCase(EnvironmentList); //Agent choisit la case non vide la plus proche
+			
 			//envir=agent.init_dist(EnvironmentList, close, envir);
-			//Movelist=agent.exploration_informée(close, EnvironmentList, envir);
-			//agent.execute_move(Movelist);		
-			agent.Move_to_Room(close, environment); //Agent se déplace à la case
+			//Movelist=agent.exploration_informée(close, EnvironmentList, envir); //Exploration informée note le chemin dans movelist
+			//agent.execute_move(Movelist); //Effectue les déplacements de la movelist
+			
+			try{Thread.sleep(100);}catch(InterruptedException e){System.out.println(e);}
+			
+			agent.Move_to_Room(close, environment); //Agent se déplace à la case en x puis en y
 			agent.Clean(close, environment); //Agent nettoie
+			stop=EnvironmentList.size();
+			stop--;
+			
 			}
-		
 		}
 	};
 	// Agent méthode non informée.
@@ -66,7 +79,7 @@ public class Main extends Application {
 			try{Thread.sleep(7000);
 			
 			}catch(InterruptedException e){System.out.println(e);}
-			for(int j = 0 ; j<5; j++)
+			while(stop>0)
 			{
 			System.out.println("il y a "+ agent.Observe(environment).size()+ " cases à visiter");	
 	
@@ -87,7 +100,9 @@ public class Main extends Application {
 				int reste = itineraire.size() - i;
 				System.out.println(" il reste "+ reste + " cases à visiter");
 			}
-		}}
+			stop--;
+			}
+		}
 	};
 	@Override
 	public void start(Stage primaryStage) {

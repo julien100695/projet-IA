@@ -7,7 +7,7 @@ import app.Environnement;
 
 public class AgentA {		
 	//time in sec for moving of 1 case
-	public final int MOVE_TIME = 250;
+	public final int MOVE_TIME = 300;
 	//time in sec for observing
 	public final int OBSERVE_TIME = 3;
 	
@@ -16,6 +16,8 @@ public class AgentA {
 	public int posy = 0;
 	
 	public int energie = 0;
+	public int dust = 0;
+	public int jewel = 0;
 	
 	//tab of actual environment
 	//public app.Room[][] environment; 
@@ -47,8 +49,7 @@ public class AgentA {
 					EnvironmentList.add(caseState);
 				}
 			}
-		}
-		
+		}	
 		return EnvironmentList;
 	}
 	
@@ -117,13 +118,19 @@ public class AgentA {
 		if(caseS.getState() == Case.jewel){
 			caseS.setState(Case.empty);
 			environment.cases[caseS.posCaseX][caseS.posCaseY].setTypeC(Case.empty);
+			jewel++;
+			energie++;
 			return "PickUp";
+			
 		}
 		else
 		{
 			caseS.setState(Case.empty);
 			environment.cases[caseS.posCaseX][caseS.posCaseY].setTypeC(Case.empty);
+			dust++;
+			energie++;
 			return "Vaccum";
+			
 		}
 	}	
 		
@@ -157,7 +164,6 @@ public class AgentA {
 				}
 			}
 				energie++;
-				System.out.println("posx: " + posx + " posy " + posy);
 				
 	}
 	
@@ -401,10 +407,7 @@ public class AgentA {
 		caseRobot = nouvelEnsemble.get(valeurPourMin);
  
 		
-		// On ajoute la valeur dans l'itinéraire. 
-		
-				
-		
+		// On ajoute la valeur dans l'itinéraire. 					
 	} 		
 
 		return nouvelEnsemble;
