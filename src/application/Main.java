@@ -31,7 +31,7 @@ public class Main extends Application {
 			 environment.add_stuff_to_clean(); //Environnement ajoute poussière ou bijou  
 		} 	
 	};
-	//Agent
+	//Agent methode informée 
 	Thread agen = new Thread() {
 		public void run() {			
 			System.out.println("Thread2");
@@ -56,11 +56,44 @@ public class Main extends Application {
 		
 		}
 	};
+	// Agent méthode non informée.
+	Thread agen2 = new Thread() {
+		public void run() {			
+			System.out.println("Thread2");
+			agent = new AgentA();
+			//start later to let environment initialize
+			
+			try{Thread.sleep(7000);
+			
+			}catch(InterruptedException e){System.out.println(e);}
+			for(int j = 0 ; j<5; j++)
+			{
+			System.out.println("il y a "+ agent.Observe(environment).size()+ " cases à visiter");	
 	
+			
+			ArrayList<CaseState> itineraire = new ArrayList<CaseState>();
+			itineraire = agent.explorationNonInformée(environment);
+			
+			System.out.println("l itineraire est de " + itineraire.size() + " de cases");
+			for (int i=0 ; i<itineraire.size();i++)
+			{
+				System.out.println("il est en x = " + itineraire.get(i).getPosCaseX() + " y = " + itineraire.get(i).getPosCaseY() );
+			}
+			for(int i = 0 ; i<=itineraire.size();i++)
+			{
+				agent.Move_to_Room(itineraire.get(i), environment);
+				agent.Clean(itineraire.get(i), environment);
+				
+				int reste = itineraire.size() - i;
+				System.out.println(" il reste "+ reste + " cases à visiter");
+			}
+		}}
+	};
 	@Override
 	public void start(Stage primaryStage) {
 		envi.start();
-		agen.start();
+		agen2.start();
+		
 		try {
 			
 			//Configuration Fenetre

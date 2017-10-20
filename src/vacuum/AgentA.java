@@ -350,4 +350,64 @@ public class AgentA {
 			posy=Movelist.get(i).posCaseY;
 		}
 	}*/
+	
+	public ArrayList<CaseState> explorationNonInformée(Environnement environment)
+	{
+	 
+		// Initialisation 
+		ArrayList<CaseState> ensembleCases = new ArrayList<CaseState>();
+		ArrayList<CaseState> nouvelEnsemble = new ArrayList<CaseState>();
+		ArrayList<Integer> listepoids = new ArrayList<Integer>();
+		ensembleCases = Observe(environment);
+		int valeur=1000;
+		//int poidsInitial = 0 ;
+		//listepoids.add(poidsInitial);
+		
+		CaseState caseRobot ;
+		int dmin2 = 1000;
+		int valeurPourMin2 = 0;
+		
+		for(int i=0; i<ensembleCases.size();i++)
+		{
+			int d1 = PathCalculValue(ensembleCases.get(i),0,0);
+			if (d1<dmin2)
+			{
+				dmin2 = d1;
+				valeurPourMin2 = i;
+			}
+		}
+		 
+		caseRobot = ensembleCases.get(valeurPourMin2);
+		ensembleCases.remove(valeurPourMin2);
+		nouvelEnsemble.add(caseRobot);
+		
+	while(ensembleCases.isEmpty() == false)
+	{
+		int dmin = 1000;
+		int valeurPourMin = 0;
+		
+		for (int i=0; i<ensembleCases.size();i++)
+		{
+			int d1 = PathCalculValue(ensembleCases.get(i), caseRobot.getPosCaseX(), caseRobot.getPosCaseY());
+			if(dmin>d1)
+			{
+				dmin = d1 ;
+				valeurPourMin = i;
+			}
+		}
+		
+		nouvelEnsemble.add(ensembleCases.get(valeurPourMin));
+		ensembleCases.remove(valeurPourMin);
+		caseRobot = nouvelEnsemble.get(valeurPourMin);
+ 
+		
+		// On ajoute la valeur dans l'itinéraire. 
+		
+				
+		
+	} 		
+
+		return nouvelEnsemble;
+		
+	}
 }

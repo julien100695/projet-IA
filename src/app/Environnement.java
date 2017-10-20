@@ -8,7 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.shape.Path;
 
 public class Environnement {
-	public final int SPAWN_TIMER=2000;
+	public final int SPAWN_TIMER=1300;
 	public Room[][] cases;
 	Path path = new Path();
 	Random rand = new Random();
